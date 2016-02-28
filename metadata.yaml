@@ -1,0 +1,24 @@
+_repo: An-Introduction-to-Chemical-Science_3708
+creator:
+  author:
+    agent_name: Williams, Rufus P. (Rufus Phillips)
+    alias: Williams, R. P. (Rufus Phillips)
+    birthdate: 1851
+    deathdate: 1911
+    gutenberg_agent_id: '1275'
+    url: http://www.gutenberg.org/2009/agents/1275
+description: ''
+gutenberg_bookshelf: Chemistry
+gutenberg_issued: '2003-02-01'
+gutenberg_type: Text
+identifiers:
+  gutenberg: '3708'
+language: en
+publisher: Project Gutenberg
+rights: Public domain in the USA.
+rights_url: http://creativecommons.org/about/pdm
+subjects:
+- !lcc 'QD'
+- !lcsh 'Chemistry'
+title: An Introduction to Chemical Science
+url: http://www.gutenberg.org/ebooks/3708
