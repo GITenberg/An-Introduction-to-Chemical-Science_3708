@@ -1,0 +1,61 @@
+sudo: required
+dist: trusty
+language: ruby
+
+before_install:
+before_install:
+- gem install asciidoctor -v 1.5.2
+- gem install tilt
+- sudo pip install git+https://github.com/gitenberg-dev/gitberg
+- sudo pip install pillow
+- sudo pip install cssutils
+- sudo pip install docutils
+- sudo pip install roman
+- sudo pip install git+https://github.com/gitenberg-dev/pg-epubmaker
+script:
+- VERSION=`ruby -e "require 'yaml'; meta = YAML.load_file('metadata.yaml'); puts meta['_version'];"`
+- git clone https://github.com/gitenberg-dev/asciidoctor-htmlbook.git
+- sudo pip install -r asciidoctor-htmlbook/gitberg-machine/requirements.txt
+
+- /usr/bin/python -c "from gitenberg import travis; travis.build_epub()"
+- ebook-convert book.epub book.mobi
+- xvfb-run ebook-convert book.epub book.pdf
+branches:
+  only:
+  - master
+notifications:
+  webhooks:
+    urls:
+      - https://unglue.it/api/travisci/webhook
+    on_success: always
+    on_failure: never
+    on_start: never
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: rhYbvQr5jOluTDz5nKiBsefeMoxeGMxXPnAroYxgwPSgSTSijc57FEK7SsTeFOTXKuxPMdXia4jbhb1SOLyeU/p2EBZ6sXg+CqmoQuFpxasMRtC/Ry3UkHyl3VZkHCIslxHtvl00AUrl5d/KxSEjZCTMLAzUxyMj0QswN84g7aVW8pR14dWNm2yd2EseZzLcpf86nl+uCHB0d3PwxtIUzyZ5D4bOxGpEyVMPqYiinlpbhdXHHwV9nH4phipL5UyHiCWbkvXQtRzQsuxH7HSyJ8pJvX/GMJtW+BP6voADpM2z9j+RJENCdGzoeU73+i/XRLwz97k0Qywl11HjHSC6jkgUDSkh6ZzheYLhU+bvMCAtriOj2bgj35FvSg1wVeeDCG7udcPd06Pg7LtO6jBwWljCG6mdPv7CrV566EXx5nNrI3OKeahAH1LvPAa4la8uB2qeq7rzmGL5vIFHpZJgiyLECyXPbNW8//w2J/9tn+4l6FlM/kUv7n81Cw5nF/SHcUZoCzpcbh1AkL6GKay8YAUu/cDnbWwL16TPVF14avDZLDi/Od3B7Yoyh+Mu7YxxfgGsCUL8DX5P+2yENtam5XEFSghWHpm+LqKbghAjzTewdAYcjRhmHp06nDgRvsEEqQtnt6hxtvAa985IEg3EEbrQgWINVZt2YmSpyF9z3UE=
+  file:
+    - book.epub
+    - book.mobi
+    - book.pdf
+  "on":
+    repo: GITenberg/An-Introduction-to-Chemical-Science_3708
+addons:
+  apt:
+    packages:
+    - xsltproc
+    - xvfb
+    - calibre
+    - python-pip
+    - git
+    - python-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-lxml
+    - libxml2-dev
+    - libxslt1-dev
+    - tidy
